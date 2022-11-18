@@ -16,4 +16,4 @@
 
 
 
-### Ссыылка на проект https://ealazarenko.github.io/mesto/
+### Ссылка на проект https://ealazarenko.github.io/mesto/
