@@ -1,0 +1,20 @@
+.popup__user-status {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .5);
+  margin: 0 0 48px;
+  padding: 0 0 9px;
+}
+
+.popup__user-status:focus {
+  outline: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__user-status {
+    margin: 0 0 42px;
+  }
+}
