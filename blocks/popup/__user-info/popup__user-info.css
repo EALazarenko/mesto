@@ -1,0 +1,20 @@
+.popup__user-info {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  margin: 0 0 32px;
+  padding: 0 0 10px;
+}
+
+.popup__user-info:focus {
+  outline: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .popup__user-info {
+    margin: 0 0 30px;
+  }
+}

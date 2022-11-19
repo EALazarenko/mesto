@@ -5,7 +5,15 @@
     "status .";
   column-gap: 18px;
   align-items: baseline;
+  max-width: 336px;
 }
+
+@media screen and (max-width: 675px) {
+  .profile__info {
+    max-width: 282px;
+  }
+}
+
 
 @media screen and (max-width: 599px) {
   .profile__info {
