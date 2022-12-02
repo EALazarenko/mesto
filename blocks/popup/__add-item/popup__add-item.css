@@ -1,4 +1,4 @@
-.popup__user-info {
+.popup__add-item {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -9,12 +9,12 @@
   padding: 0 0 10px;
 }
 
-.popup__user-info:focus {
+.popup__add-item:focus {
   outline: 0;
 }
 
 @media screen and (max-width: 600px) {
-  .popup__user-info {
+  .popup__add-item {
     margin: 0 0 30px;
   }
 }
