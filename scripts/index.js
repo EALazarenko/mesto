@@ -19,18 +19,42 @@ const formAddElement = popupAddElement.querySelector('.popup__inputs_add-item');
 const titleInput = formAddElement.querySelector('[name="item-title"]');
 const linkInput = formAddElement.querySelector('[name="item-link"]');
 
+const buttonSubmit = popupAddElement.querySelector('.popup__button');
+
+const handleKeyUp = (e) => {
+  if(e.key === 'Escape') {
+  const openPopup = document.querySelector('.popup_opened');
+  closePopup(openPopup);
+  }
+}
+
+const handleOverlay = (e) => {
+  if(!e.target.closest('.popup__container')) {
+    closePopup(e.target);
+  }
+}
+
+
 
 const openPopup = function (popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keyup', handleKeyUp);
 }
 
 const closePopup = function (popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keyup', handleKeyUp);
+}
+
+function disableButton(button) {
+  button.classList.add('popup__button_disabled');
+  button.disabled = 'disabled';
 }
 
 // переключатели Add
 popupAddCardElement.addEventListener('click', function () {
   openPopup(popupAddElement);
+  disableButton(buttonSubmit)
 })
 
 popupAddClose.addEventListener('click', function () {
@@ -159,6 +183,7 @@ function handleAddFormSubmit(evt) {
 
   evt.target.reset()
   closePopup(popupAddElement);
+
 }
 
 
@@ -176,3 +201,7 @@ popupImageClose.addEventListener('click', function () {
   closePopup(popupCard);
 })
 
+
+popupEditElement.addEventListener("click", handleOverlay);
+popupAddElement.addEventListener("click", handleOverlay);
+popupCard.addEventListener("click", handleOverlay);
