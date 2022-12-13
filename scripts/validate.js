@@ -30,16 +30,16 @@ function hasInvalidInput(inputList) {
 function toggleButtonState(inputList, inactiveButtonClass, buttonElement) {
 
   if (hasInvalidInput(inputList)) {
-  buttonElement.classList.add(inactiveButtonClass);
-  buttonElement.disabled = 'disabled';
+    buttonElement.classList.add(inactiveButtonClass);
+    buttonElement.disabled = true;
   } else {
-  buttonElement.classList.remove(inactiveButtonClass);
-  buttonElement.disabled = '';
+    buttonElement.classList.remove(inactiveButtonClass);
+    buttonElement.disabled = false;
   }
 };
 
-function enableValidation(obj) {
-  const { formSelector, inputSelector, submitButtonSelector, errorClass, inactiveButtonClass, inputErrorClass } = obj;
+function enableValidation(validationConfig) {
+  const { formSelector, inputSelector, submitButtonSelector, errorClass, inactiveButtonClass, inputErrorClass } = validationConfig;
 
   const formList = Array.from(document.querySelectorAll(formSelector));
 
