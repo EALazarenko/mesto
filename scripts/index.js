@@ -11,13 +11,13 @@ const popupAddClose = popupAdd.querySelector('.popup__close');
 const popupAddCard = profile.querySelector('.profile__add'); //открытие add
 
 //строки
-const formEditInputs = document.querySelector('.popup__inputs_edit-item');
-const nameInput = formEditInputs.querySelector('.popup__add-item_type_name');
-const jobInput = formEditInputs.querySelector('.popup__add-item_type_status');
+const formEditProfile = document.querySelector('.popup__inputs_edit-item');
+const nameInput = formEditProfile.querySelector('.popup__add-item_type_name');
+const jobInput = formEditProfile.querySelector('.popup__add-item_type_status');
 
-const formAddInputs = popupAdd.querySelector('.popup__inputs_add-item');
-const titleInput = formAddInputs.querySelector('[name="item-title"]');
-const linkInput = formAddInputs.querySelector('[name="item-link"]');
+const formAddCard = popupAdd.querySelector('.popup__inputs_add-item');
+const titleInput = formAddCard.querySelector('[name="item-title"]');
+const linkInput = formAddCard.querySelector('[name="item-link"]');
 
 const buttonAddSubmit = popupAdd.querySelector('.popup__button_add');
 
@@ -34,7 +34,7 @@ const cardTemplate = document.querySelector('#elements-template');
 const popupCard = document.querySelector('.popup_for_card');
 const popupImageClose = popupCard.querySelector('.popup__close_full-image');
 const popupImageBtn = popupCard.querySelector('.popup__card-image');
-const popupCardTitile = popupCard.querySelector('.popup__card-title');
+const popupCardTitle = popupCard.querySelector('.popup__card-title');
 
 
 
@@ -96,7 +96,7 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupEdit);
 }
 
-formEditInputs.addEventListener('submit', handleProfileFormSubmit);
+formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 
 //лайк и делит
@@ -119,22 +119,22 @@ function generateCard(dataCard) {
   imageCard.alt = dataCard.title;
 
   imageCard.addEventListener('click', function () {
-    handleOpenImage(dataCard)
+    handleOpenImage()
   })
 
   const handleOpenImage = () => {
-    popupCardTitile.textContent = dataCard.title;
+    popupCardTitle.textContent = dataCard.title;
     popupImageBtn.src = dataCard.image;
     popupImageBtn.alt = dataCard.title;
 
     openPopup(popupCard);
   }
 
-  const likeButton = newCard.querySelector('.element__like'); //лайк
-  likeButton.addEventListener('click', handleLikeCard)
+  const buttonLike = newCard.querySelector('.element__like'); //лайк
+  buttonLike.addEventListener('click', handleLikeCard)
 
-  const deleteButton = newCard.querySelector('.element__delete'); //удаление
-  deleteButton.addEventListener('click', handleDeleteCard)
+  const buttonDelete = newCard.querySelector('.element__delete'); //удаление
+  buttonDelete.addEventListener('click', handleDeleteCard)
 
   return newCard;
 }
@@ -163,7 +163,7 @@ function handleAddFormSubmit(evt) {
 
 }
 
-formAddInputs.addEventListener('submit', handleAddFormSubmit);
+formAddCard.addEventListener('submit', handleAddFormSubmit);
 
 popupImageClose.addEventListener('click', function () {
   closePopup(popupCard);
