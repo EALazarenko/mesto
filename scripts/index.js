@@ -1,3 +1,5 @@
+/* import { Card } from "./Card.js"; */
+
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
 const profileStatus = profile.querySelector('.profile__status');
@@ -98,18 +100,74 @@ function handleProfileFormSubmit(evt) {
 
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
+class Card {
+  constructor(config, cardTemplate, handleOpenImage) {
+    this._title = config.title;
+    this._image = config.image;
+
+    this._cardTemplate = cardTemplate;
+
+    this._handleOpenImage = handleOpenImage;
+  }
+
+  _getTemplate() {
+    const instanceCard = document
+      .querySelector(this._cardTemplate)
+      .content.querySelector('.element')
+      .cloneNode(true);
+
+      return instanceCard;
+  }
+
+  generateCards() {
+    this._card = this._getTemplate;
+    this._cardImg = this._card.querySelector('.element__image');
+    this._cardImg.src = this._image;
+    this._cardImg.alt = this._title;
+    this._card.querySelector('.element__title').textContent = this._title;
+    this._buttonLike = this._card.querySelector('.element__like');
+    this._buttonDelete = this._card.querySelector('.element__delete');
+
+    this._setEventListeners();
+
+    return this._card;
+  }
+
+  _setEventListeners() {
+
+    this._cardImg.addEventListener('click', () => {
+      this._handleOpenImage(this._name, this._link);
+    })
+
+    this._buttonLike.addEventListener('click', () => {
+      this._buttonLike.classList.toggle('element_active');
+    });
+
+    this._buttonDelete.addEventListener('click', () => {
+      this._element.remove();
+    })
+  }
+}
+
 
 //лайк и делит
-const handleDeleteCard = (event) => {
+/* const handleDeleteCard = (event) => {
   event.target.closest('.element').remove();
 }
 
 const handleLikeCard = (event) => {
   event.target.classList.toggle('element_active');
-}
+} */
 
-function generateCard(dataCard) {
-  const newCard = cardTemplate.content.cloneNode(true); //клон массива
+function generateCard(config, cardTemplate) {
+  const newCard = new Card(
+    {
+      title: config.title,
+      image: config.image,
+    },
+    cardTemplate,
+    handleOpenImage
+  )
 
   const titleCard = newCard.querySelector('.element__title'); //название
   titleCard.textContent = dataCard.title;
@@ -130,11 +188,11 @@ function generateCard(dataCard) {
     openPopup(popupCard);
   }
 
-  const buttonLike = newCard.querySelector('.element__like'); //лайк
+  /* const buttonLike = newCard.querySelector('.element__like'); //лайк
   buttonLike.addEventListener('click', handleLikeCard)
 
   const buttonDelete = newCard.querySelector('.element__delete'); //удаление
-  buttonDelete.addEventListener('click', handleDeleteCard)
+  buttonDelete.addEventListener('click', handleDeleteCard) */
 
   return newCard;
 }
