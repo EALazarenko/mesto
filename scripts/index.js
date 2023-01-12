@@ -149,7 +149,13 @@ class Card {
   }
 }
 
+ const handleOpenImage = (title, image) => {
+    popupCardTitle.textContent = title;
+    popupImageBtn.src = image;
+    popupImageBtn.alt = title;
 
+    openPopup(popupCard);
+ }
 //лайк и делит
 /* const handleDeleteCard = (event) => {
   event.target.closest('.element').remove();
@@ -169,24 +175,16 @@ function generateCard(config, cardTemplate) {
     handleOpenImage
   )
 
-  const titleCard = newCard.querySelector('.element__title'); //название
+  /* const titleCard = newCard.querySelector('.element__title'); //название
   titleCard.textContent = dataCard.title;
 
   const imageCard = newCard.querySelector('.element__image'); //картинка
   imageCard.src = dataCard.image;
-  imageCard.alt = dataCard.title;
+  imageCard.alt = dataCard.title; */
 
-  imageCard.addEventListener('click', function () {
+  /* imageCard.addEventListener('click', function () {
     handleOpenImage()
-  })
-
-  const handleOpenImage = () => {
-    popupCardTitle.textContent = dataCard.title;
-    popupImageBtn.src = dataCard.image;
-    popupImageBtn.alt = dataCard.title;
-
-    openPopup(popupCard);
-  }
+  }) */
 
   /* const buttonLike = newCard.querySelector('.element__like'); //лайк
   buttonLike.addEventListener('click', handleLikeCard)
@@ -194,27 +192,39 @@ function generateCard(config, cardTemplate) {
   const buttonDelete = newCard.querySelector('.element__delete'); //удаление
   buttonDelete.addEventListener('click', handleDeleteCard) */
 
-  return newCard;
+  return newCard.generateCards();
 }
 
-const renderCard = (dataCard, wrapElement) => {
+/* const renderCard = (dataCard, wrapElement) => {
   const elementNew = generateCard(dataCard)
   wrapElement.prepend(elementNew);
-}
+} */
 
-initialCards.forEach(function (dataCard) {
+/* initialCards.forEach((item) => {
   renderCard(dataCard, cardsContainer)
-})
+}) */
+
+const renderCard = (element) => {
+  cardsContainer.prepend(element);
+};
+
+initialCards.forEach((item) => {
+  const cardElement = generateCard(item, cardTemplate);
+  renderCard(cardElement);
+
+});
 
 function handleAddFormSubmit(evt) {
   evt.preventDefault();
 
-  const cardData = {
+  const cardData = generateCard({
     title: titleInput.value,
-    image: linkInput.value
-  }
+    image: linkInput.value,
+  },
+  cardTemplate
+  );
 
-  renderCard(cardData, cardsContainer)
+  renderCard(cardData)
 
   evt.target.reset()
   closePopup(popupAdd);
