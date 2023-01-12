@@ -101,18 +101,17 @@ function handleProfileFormSubmit(evt) {
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
 class Card {
-  constructor(config, cardTemplate, handleOpenImage) {
+  constructor(config, templateSelector, handleOpenImage) {
     this._title = config.title;
     this._image = config.image;
 
-    this._cardTemplate = cardTemplate;
-
+    this._templateSelector = templateSelector;
     this._handleOpenImage = handleOpenImage;
   }
 
   _getTemplate() {
     const instanceCard = document
-      .querySelector(this._cardTemplate)
+      .querySelector(this._templateSelector)
       .content.querySelector('.element')
       .cloneNode(true);
 
@@ -165,13 +164,13 @@ const handleLikeCard = (event) => {
   event.target.classList.toggle('element_active');
 } */
 
-function generateCard(config, cardTemplate) {
+function generateCard(config, templateSelector) {
   const newCard = new Card(
     {
       title: config.title,
       image: config.image,
     },
-    cardTemplate,
+    templateSelector,
     handleOpenImage
   )
 
@@ -209,7 +208,7 @@ const renderCard = (element) => {
 };
 
 initialCards.forEach((item) => {
-  const cardElement = generateCard(item, cardTemplate);
+  const cardElement = generateCard(item, templateSelector);
   renderCard(cardElement);
 
 });
@@ -221,7 +220,7 @@ function handleAddFormSubmit(evt) {
     title: titleInput.value,
     image: linkInput.value,
   },
-  cardTemplate
+  templateSelector
   );
 
   renderCard(cardData)
