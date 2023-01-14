@@ -1,5 +1,6 @@
 import { Card } from "./Card.js";
-import { FormValidator, data } from "./FormValidator.js"
+import { FormValidator } from "./FormValidator.js";
+import { validationConfig } from "./constants.js";
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
@@ -63,15 +64,10 @@ const closePopup = function (popup) {
   document.removeEventListener('keyup', handleKeyUp);
 }
 
-function disableButton(button) {
-  button.classList.add('popup__button_disabled');
-  button.disabled = true;
-}
 
 // переключатели Add
 popupAddCard.addEventListener('click', function () {
   openPopup(popupAdd);
-  disableButton(buttonAddSubmit)
 })
 
 popupAddClose.addEventListener('click', function () {
@@ -147,8 +143,8 @@ function handleAddFormSubmit(evt) {
 
 }
 
-const validationEditForm = new FormValidator(data, '.popup__inputs_edit-item');
-const validationAddForm = new FormValidator(data, '.popup__inputs_add-item');
+const validationEditForm = new FormValidator(validationConfig, '.popup__inputs_edit-item');
+const validationAddForm = new FormValidator(validationConfig, '.popup__inputs_add-item');
 
 validationEditForm.enableValidation();
 validationAddForm.enableValidation();
