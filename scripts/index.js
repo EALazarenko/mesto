@@ -1,4 +1,5 @@
-/* import { Card } from "./Card.js"; */
+import { Card } from "./Card.js";
+import { FormValidator, data } from "./FormValidator.js"
 
 const profile = document.querySelector('.profile');
 const profileName = profile.querySelector('.profile__name');
@@ -30,14 +31,13 @@ const buttonAddSubmit = popupAdd.querySelector('.popup__button_add');
 const cardsContainer = document.querySelector('.elements');
 
 //темплейт
-const cardTemplate = document.querySelector('#elements-template');
+const cardTemplate = '#elements-template';
 
 // Попап 3
 const popupCard = document.querySelector('.popup_for_card');
 const popupImageClose = popupCard.querySelector('.popup__close_full-image');
 const popupImageBtn = popupCard.querySelector('.popup__card-image');
 const popupCardTitle = popupCard.querySelector('.popup__card-title');
-
 
 
 const handleKeyUp = (e) => {
@@ -100,70 +100,14 @@ function handleProfileFormSubmit(evt) {
 
 formEditProfile.addEventListener('submit', handleProfileFormSubmit);
 
-class Card {
-  constructor(config, templateSelector, handleOpenImage) {
-    this._title = config.title;
-    this._image = config.image;
 
-    this._templateSelector = templateSelector;
-    this._handleOpenImage = handleOpenImage;
-  }
+const handleOpenImage = (title, image) => {
+  popupCardTitle.textContent = title;
+  popupImageBtn.src = image;
+  popupImageBtn.alt = title;
 
-  _getTemplate() {
-    const instanceCard = document
-      .querySelector(this._templateSelector)
-      .content.querySelector('.element')
-      .cloneNode(true);
-
-      return instanceCard;
-  }
-
-  generateCards() {
-    this._card = this._getTemplate;
-
-    this._setEventListeners();
-
-    this._cardImg = this._card.querySelector('.element__image');
-    this._cardImg.src = this._image;
-    this._cardImg.alt = this._title;
-    this._card.querySelector('.element__title').textContent = this._title;
-    this._buttonLike = this._card.querySelector('.element__like');
-    this._buttonDelete = this._card.querySelector('.element__delete');
-
-    return this._card;
-  }
-
-  _setEventListeners() {
-
-    this._cardImg.addEventListener('click', () => {
-      this._handleOpenImage(this._name, this._link);
-    })
-
-    this._buttonLike.addEventListener('click', () => {
-      this._buttonLike.classList.toggle('element_active');
-    });
-
-    this._buttonDelete.addEventListener('click', () => {
-      this._element.remove();
-    })
-  }
+  openPopup(popupCard);
 }
-
- const handleOpenImage = (title, image) => {
-    popupCardTitle.textContent = title;
-    popupImageBtn.src = image;
-    popupImageBtn.alt = title;
-
-    openPopup(popupCard);
- }
-//лайк и делит
-/* const handleDeleteCard = (event) => {
-  event.target.closest('.element').remove();
-}
-
-const handleLikeCard = (event) => {
-  event.target.classList.toggle('element_active');
-} */
 
 function generateCard(config, templateSelector) {
   const newCard = new Card(
@@ -173,36 +117,9 @@ function generateCard(config, templateSelector) {
     },
     templateSelector,
     handleOpenImage
-  )
-
-  /* const titleCard = newCard.querySelector('.element__title'); //название
-  titleCard.textContent = dataCard.title;
-
-  const imageCard = newCard.querySelector('.element__image'); //картинка
-  imageCard.src = dataCard.image;
-  imageCard.alt = dataCard.title; */
-
-  /* imageCard.addEventListener('click', function () {
-    handleOpenImage()
-  }) */
-
-  /* const buttonLike = newCard.querySelector('.element__like'); //лайк
-  buttonLike.addEventListener('click', handleLikeCard)
-
-  const buttonDelete = newCard.querySelector('.element__delete'); //удаление
-  buttonDelete.addEventListener('click', handleDeleteCard) */
-
+  );
   return newCard.generateCards();
 }
-
-/* const renderCard = (dataCard, wrapElement) => {
-  const elementNew = generateCard(dataCard)
-  wrapElement.prepend(elementNew);
-} */
-
-/* initialCards.forEach((item) => {
-  renderCard(dataCard, cardsContainer)
-}) */
 
 const renderCard = (element) => {
   cardsContainer.prepend(element);
@@ -220,7 +137,7 @@ function handleAddFormSubmit(evt) {
     title: titleInput.value,
     image: linkInput.value,
   },
-  cardTemplate
+    cardTemplate
   );
 
   renderCard(cardData)
@@ -229,6 +146,12 @@ function handleAddFormSubmit(evt) {
   closePopup(popupAdd);
 
 }
+
+const validationEditForm = new FormValidator(data, '.popup__inputs_edit-item');
+const validationAddForm = new FormValidator(data, '.popup__inputs_add-item');
+
+validationEditForm.enableValidation();
+validationAddForm.enableValidation();
 
 formAddCard.addEventListener('submit', handleAddFormSubmit);
 
