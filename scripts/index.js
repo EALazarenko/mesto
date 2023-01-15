@@ -51,6 +51,9 @@ const handleKeyUp = (e) => {
 const handleOverlayClick = (e) => {
   if (!e.target.closest('.popup__container')) {
     closePopup(e.target);
+    validationAddForm.resetValidation();
+    validationEditForm.resetValidation();
+    hideInputValue();
   }
 }
 
@@ -64,14 +67,21 @@ const closePopup = function (popup) {
   document.removeEventListener('keyup', handleKeyUp);
 }
 
+const hideInputValue = function () {
+  titleInput.value = '';
+  linkInput.value = '';
+}
 
 // переключатели Add
 popupAddCard.addEventListener('click', function () {
   openPopup(popupAdd);
+  validationAddForm.disableButton(buttonAddSubmit);
 })
 
 popupAddClose.addEventListener('click', function () {
   closePopup(popupAdd);
+  validationAddForm.resetValidation();
+  hideInputValue();
 })
 
 // переключатели Edit
@@ -83,6 +93,7 @@ popupOpenEditForm.addEventListener('click', function () {
 
 popupEditClose.addEventListener('click', function () {
   closePopup(popupEdit);
+  validationEditForm.resetValidation();
 })
 
 function handleProfileFormSubmit(evt) {
@@ -148,6 +159,9 @@ const validationAddForm = new FormValidator(validationConfig, '.popup__inputs_ad
 
 validationEditForm.enableValidation();
 validationAddForm.enableValidation();
+
+
+
 
 formAddCard.addEventListener('submit', handleAddFormSubmit);
 
