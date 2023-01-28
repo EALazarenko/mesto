@@ -14,7 +14,5 @@ export class Section {
 
   addItem(element) {
     this._containerSelector.prepend(element);
-    console.log(this._containerSelector);
-    console.log(element)
   }
 }

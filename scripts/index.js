@@ -43,6 +43,7 @@ const popupCard = '.popup_for_card';
 /* const popupImageClose = popupCard.querySelector('.popup__close_full-image'); */
 
 const handleOpenImage = new PopupWithImage(popupCard);
+handleOpenImage.setEventListeners();
 
 const handleCardClick = (title, image) => {
   handleOpenImage.open(title, image);
@@ -69,11 +70,11 @@ const renderCard = new Section({
 }, cardsContainer);
 
 renderCard.renderItems();
-debugger;
+
 const handleEditProfile = (/* evt,  */inputValues) => {
   /* evt.preventDefault(); */
-  const { username, job } = inputValues;
-  userInfo.setUserInfo(username, job);
+  const { userName, userStatus } = inputValues;
+  userInfo.setUserInfo(userName, userStatus);
   popupProfile.close();
 };
 
@@ -82,12 +83,14 @@ const popupProfile = new PopupWithForm(
   handleEditProfile
 );
 
+popupProfile.setEventListeners();
+
 const handleCardAdd = (/* evt,  */inputValues) => {
   /* evt.preventDefault(); */
   /* evt; */
-  const { text, link } = inputValues;
+  /* const { text, link } = inputValues; */
 
-  const elementCard = generateCard({ title: text, image: link });
+  const elementCard = generateCard({ title: inputValues['item-title'], image: inputValues['item-link'] });
   renderCard.addItem(elementCard);
   popupCardAdd.close();
 };
@@ -97,6 +100,8 @@ const popupCardAdd = new PopupWithForm(
   popupAdd,
   handleCardAdd
 );
+
+popupCardAdd.setEventListeners();
 
 const userInfo = new UserInfo({
   profileName,
@@ -109,6 +114,7 @@ const handleEditProfileValue = () => {
   /* const form = document.querySelector('.popup__inputs_edit-item'); */
   nameInput.value = username;
   jobInput.value = job;
+  validationEditForm.resetValidation();
 
   popupProfile.open();
 };
@@ -193,7 +199,6 @@ popupEditClose.addEventListener('click', function () {
 } */
 
 
-
 /* const renderCard = (element) => {
   cardsContainer.prepend(element);
 }; */
@@ -229,6 +234,8 @@ popupOpenEditForm.addEventListener("click", handleEditProfileValue);
 
 /* прослушиватель клика добавления формы */
 popupAddCard.addEventListener("click", function () {
+  validationAddForm.resetValidation();
+  validationAddForm.disableButton(popupAddCard);
   popupCardAdd.open();
 });
 
