@@ -1,10 +1,10 @@
 export class Card {
-  constructor(config, templateSelector, handleOpenImage) {
+  constructor(config, templateSelector, handleCardClick) {
     this._title = config.title;
     this._image = config.image;
 
     this._templateSelector = templateSelector;
-    this._handleOpenImage = handleOpenImage;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -34,7 +34,7 @@ export class Card {
   _setEventListeners() {
 
     this._cardImg.addEventListener('click', () => {
-      this._handleOpenImage(this._title, this._image);
+      this._handleCardClick(this._title, this._image);
     })
 
     this._buttonLike.addEventListener('click', () => {
