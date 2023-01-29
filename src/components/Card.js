@@ -31,18 +31,30 @@ export class Card {
     return this._card;
   }
 
+  _toggleLike() {
+    this._buttonLike.classList.toggle('element_active');
+  }
+
+  _deleteCard() {
+    this._card.remove();
+  }
+
+  _handleImageClick() {
+    this._handleCardClick(this._title, this._image);
+  }
+
   _setEventListeners() {
 
     this._cardImg.addEventListener('click', () => {
-      this._handleCardClick(this._title, this._image);
+      this._handleImageClick();
     })
 
     this._buttonLike.addEventListener('click', () => {
-      this._buttonLike.classList.toggle('element_active');
+      this._toggleLike();
     });
 
     this._buttonDelete.addEventListener('click', () => {
-      this._card.remove();
+      this._deleteCard();
     })
   }
 }
