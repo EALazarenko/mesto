@@ -13,13 +13,13 @@ _getResponse(res) {
 }
 
 // создание карточки
-addCard(config) {
+addCard(data) {
   return fetch(`${this._baseUrl}/cards`, {
     method: "POST",
     headers: this._headers,
     body: JSON.stringify({
-      title: config.title,
-      image: config.image,
+      title: data.title,
+      image: data.image,
     }),
   }).then(this._getResponse)
 }
@@ -74,19 +74,19 @@ editUserInfo(config) {
     headers: this._headers,
     body: JSON.stringify({
       name: config.userName,
-      status: config.userStatus
+      about: config.userStatus
     })
   })
     .then(res => this._getResponse(res));
 }
 
 // смена аватара
-changeAvatar(config) {
+changeAvatar(data) {
   return fetch(`${this._baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: this._headers,
     body: JSON.stringify({
-      avatar: config.avatar
+      avatar: data.avatar
     })
   })
     .then(res => this._getResponse(res));

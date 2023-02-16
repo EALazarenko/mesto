@@ -105,8 +105,6 @@ const renderCard = new Section({
   },
 }, cardsContainer);
 
-renderCard.renderItems();
-
 const handleEditProfile = (inputValues) => {
   popupProfile.saving(true);
   const { userName, userStatus } = inputValues;
