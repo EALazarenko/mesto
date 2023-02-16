@@ -15,6 +15,7 @@
     <section class="profile">
       <div class="profile__list">
         <img class="profile__avatar" src="<%=require('./images/profile-image.png')%>" alt="Жак-Ив Кусто">
+        <button type="button" class="profile__avatar-button"></button>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit" title="Кнопка редактирования профиля"></button>
@@ -72,6 +73,27 @@
       <h2 class="popup__card-title"></h2>
     </div>
   </div>
+  <div class="popup popup_for_avatar">
+    <div class="popup__container popup__container_avatar">
+      <button type="button" class="popup__close" title="Закрыть"></button>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <form class="popup__inputs popup__input_avatar popup__form" name="add-item" novalidate>
+        <input type="url" id="input-link" name="item-link"
+          class="popup__add-item popup__add-item_type_link popup__input" placeholder="Ссылка на картинку" required>
+        <span class="popup__error input-link-error"></span>
+        <button type="submit" class="popup__button popup__button_save-avatar">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_for_confirmation">
+    <div class="popup__container popup__container_confirmation">
+      <button type="button" class="popup__close" title="Закрыть"></button>
+      <h2 class="popup__title popup__title_confirm">Вы уверены?</h2>
+      <form class="popup__form" name="confirm">
+        <button type="submit" class="popup__button popup__button_confirm">Да</button>
+      </form>
+    </div>
+  </div>
 
 
   <template id="elements-template">
@@ -80,7 +102,10 @@
       <button type="button" class="element__delete"></button>
       <div class="element__info">
         <h2 class="element__title"></h2>
-        <button type="button" class="element__like" title="Нравится"></button>
+        <div class="element__likes-group">
+          <button type="button" class="element__like" title="Нравится"></button>
+          <span class="element__number-likes">0</span>
+        </div>
       </div>
     </li>
   </template>

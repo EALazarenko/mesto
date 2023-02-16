@@ -1,5 +1,6 @@
 export const profileName = '.profile__name';
 export const profileStatus = '.profile__status';
+export const avatarImg = '.profile__avatar';
 
 export const popupEdit = '.popup_for_edit';
 
@@ -12,6 +13,12 @@ export const nameInput = document.querySelector('.popup__add-item_type_name');
 export const jobInput = document.querySelector('.popup__add-item_type_status');
 
 export const cardsContainer = '.elements';
+
+export const popupAvatar = '.popup_for_avatar';
+export const popupConfirmation = '.popup_for_confirmation';
+
+export const popupSaveAvatar = document.querySelector('.profile__avatar-button');
+
 
 //темплейт
 export const cardTemplate = '#elements-template';
