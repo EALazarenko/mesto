@@ -199,7 +199,7 @@ const handleEditProfileValue = () => {
 
 const validationEditForm = new FormValidator(validationConfig, '.popup__inputs_edit-item');
 const validationAddForm = new FormValidator(validationConfig, '.popup__inputs_add-item');
-const validationAvatar = new FormValidator(validationConfig, '.popup__input_avatar');
+const validationAvatar = new FormValidator(validationConfig, '.popup__inputs_avatar');
 
 validationEditForm.enableValidation();
 validationAddForm.enableValidation();
