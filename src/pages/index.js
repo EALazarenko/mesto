@@ -12,7 +12,6 @@ import { PopupWithConfirmation } from "../components/PopupWithConfirmation.js";
 
 import {
   validationConfig,
-  /* initialCards, */
   profileName,
   profileStatus,
   popupEdit,
@@ -42,68 +41,74 @@ const api = new Api({
 
 Promise.all([api.getInitialCards(), api.getUserInfo()])
   .then(([initialCards, userData]) => {
-    userInfo.setUserInfo(userData);
+    userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
     userInfo.id = userData._id;
 
     renderCard.renderItems(initialCards);
+
   })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
   });
 
-
 const handleOpenImage = new PopupWithImage(popupCard);
 handleOpenImage.setEventListeners();
-
-const handleCardClick = (title, image) => {
-  handleOpenImage.open(title, image);
-};
 
 const confirmPopup = new PopupWithConfirmation(popupConfirmation);
 confirmPopup.setEventListeners();
 
-const handleDeleteClick = (id) => {
-  confirmPopup.open();
-  confirmPopup.submitRemove(() => {
-    api
-      .deleteCard(id)
-      .then(() => {
-        confirmPopup.close();
-        newCard.deleteCard();
-      })
-      .catch((err) => {
-        console.log(`Ошибка: ${err}`);
-      })
-  })
-};
-
-/* const handleLikeClick = (userId) => {
-  api
-  .handleLikeClick(userId)
-  .then()
-} */
-
-const generateCard = (config) => {
-  const newCard = new Card(
+const createCard = (data) => {
+  const card = new Card(
     {
-      config,
+      data: data,
       cardTemplate,
-      id,
-      handleCardClick,
-      handleDeleteClick,
-      /* handleLikeClick */
-    },
+      userId: userInfo.id,
+      handleCardClick: (name, link) => {
+        handleOpenImage.open(name, link);
+      },
+      handleDeleteClick: (id) => {
+        confirmPopup.open();
+        confirmPopup.submitRemove(() => {
+          api
+            .deleteCard(id)
+            .then(() => {
+              confirmPopup.close();
+              card.deleteCard();
+            })
+            .catch((err) => {
+              console.log(`Ошибка: ${err}`);
+            })
+        })
+      },
+      handleSetLike: (id) => {
+        api.setLike(id)
+          .then((data) => {
+            card.handleLikeClick(data);
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          });
+      },
+      handleRemoveLike: (id) => {
+        api.deleteLike(id)
+          .then((data) => {
+            card.handleLikeClick(data);
+          })
+          .catch((err) => {
+            console.log(`Ошибка: ${err}`);
+          });
+      }
+    });
 
-  );
-  return newCard.generateCards();
+  return card.generateCards();
 }
 
 const renderCard = new Section({
-  renderer: (newCard) => {
-    const newElement = generateCard(newCard);
-    renderCard.addItem(newElement);
+  renderer: (card) => {
+    renderCard.addItem(createCard(card));
   },
-}, cardsContainer);
+},
+  cardsContainer);
 
 const handleEditProfile = (inputValues) => {
   popupProfile.saving(true);
@@ -112,7 +117,7 @@ const handleEditProfile = (inputValues) => {
   api
     .editUserInfo(userName, userStatus)
     .then((data) => {
-      userInfo.setUserInfo(data.userName, data.userStatus);
+      userInfo.setUserInfo(data.name, data.about, data.avatar);
       popupProfile.close();
     })
     .catch((err) => {
@@ -135,7 +140,7 @@ const handleEditAvatar = (data) => {
   api
     .changeAvatar(data)
     .then((data) => {
-      avatarImg.src = data.avatarImg;
+      userInfo.setAvatar(data.avatar);
       popupEditAvatar.close();
     })
     .catch((err) => {
@@ -154,9 +159,20 @@ const popupEditAvatar = new PopupWithForm(
 popupEditAvatar.setEventListeners();
 
 const handleCardAdd = (inputValues) => {
-  const elementCard = generateCard({ title: inputValues['item-title'], image: inputValues['item-link'] });
-  renderCard.addItem(elementCard);
-  popupCardAdd.close();
+  popupCardAdd.saving(true);
+  api
+    .addCard(inputValues)
+    .then((inputValues) => {
+      const elementCard = createCard(inputValues);
+      renderCard.addItem(elementCard);
+      popupCardAdd.close();
+    })
+    .catch((err) => {
+      console.log(`Ошибка: ${err}`);
+    })
+    .finally(() => {
+      popupCardAdd.saving(false);
+    });
 };
 
 const popupCardAdd = new PopupWithForm(
@@ -174,7 +190,6 @@ const userInfo = new UserInfo({
 
 const handleEditProfileValue = () => {
   const { name, about } = userInfo.getUserInfo();
-
   nameInput.value = name;
   jobInput.value = about;
   validationEditForm.resetValidation();
@@ -202,5 +217,5 @@ popupAddCard.addEventListener("click", function () {
 
 popupSaveAvatar.addEventListener('click', function () {
   validationAvatar.resetValidation();
-  popupAvatar.open();
+  popupEditAvatar.open();
 })

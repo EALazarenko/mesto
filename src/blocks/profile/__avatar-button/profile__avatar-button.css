@@ -18,6 +18,12 @@
   transition: .5s;
 }
 
+@media screen and (max-width: 599px) {
+  .profile__avatar-button {
+    margin: 0 0 26px;
+  }
+}
+
 .profile__avatar-button:hover {
   opacity: 1;
 }
